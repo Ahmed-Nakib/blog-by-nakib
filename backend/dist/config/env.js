@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
 dotenv.config();
 const envVarsFn = () => {
-    const requiredEnVariables = [
+    const requiredEnvVariables = [
         "PORT"
     ];
-    requiredEnVariables.forEach((key) => {
+    requiredEnvVariables.forEach((key) => {
         if (!process.env[key]) {
             throw new Error(`Missing required environment variable ${key}`);
         }

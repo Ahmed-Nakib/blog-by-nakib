@@ -4,7 +4,7 @@ const router = Router();
 const routeList = [
     {
         path: "/user",
-        route: UserRoute
+        route: UserRoute,
     }
 ];
 routeList.forEach(route => {

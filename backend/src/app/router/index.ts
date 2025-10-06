@@ -1,4 +1,4 @@
-import { Router } from "express"
+import { Router } from "express";
 import { UserRoute } from "../modules/user/user.route.js";
 
 const router = Router();
@@ -11,13 +11,13 @@ interface IRoute {
 const routeList: IRoute[] = [
     {
         path: "/user",
-        route: UserRoute
+        route: UserRoute,
     }
-]
+];
+
 
 routeList.forEach(route => {
     router.use(route.path, route.route)
 })
-
 
 export default router;
