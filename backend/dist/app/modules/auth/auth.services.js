@@ -1,5 +1,6 @@
 import { User } from "../user/user.model.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 const login = async (payload, res) => {
     const { email, password } = payload;
     const isUserExist = await User.findOne({ email });
@@ -16,14 +17,18 @@ const login = async (payload, res) => {
             message: "password doesn't match"
         });
     }
-    const loginUser = {
+    const tokenPayload = {
         name: isUserExist?.name,
         email: isUserExist?.email,
         avatar: isUserExist?.avatar,
         isVerified: isUserExist?.isVerified,
         isPremium: isUserExist?.isPremium
     };
-    return loginUser;
+    const accessToken = jwt.sign(tokenPayload, "secret", { expiresIn: "1d" });
+    res.cookie("accessToken", accessToken);
+    return {
+        accessToken
+    };
 };
 export const AuthServices = {
     login
