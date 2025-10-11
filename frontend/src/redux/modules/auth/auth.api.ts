@@ -6,13 +6,20 @@ const userApi = baseApi.injectEndpoints({
             query: (data) => ({
                 method: "POST",
                 url: "/auth/login",
-                body: data
+                data: data
+            })
+        }),
+
+         me: builder.query({
+            query: () => ({
+                method: "GET",
+                url: "/auth/me",
             })
         })
     })
 })
 
 
-export const {useLoginMutation} =userApi;
+export const {useLoginMutation, useMeQuery} =userApi;
 
 
