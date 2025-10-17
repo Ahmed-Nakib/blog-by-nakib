@@ -4,7 +4,8 @@ import { useId, useState } from "react"
 import { EyeIcon, EyeOffIcon } from "lucide-react"
 
 import { Input } from "@/components/ui/input"
-export default function PasswordInput({...field}) {
+
+export default function PasswordInput({ ...field }) {
   const id = useId()
   const [isVisible, setIsVisible] = useState<boolean>(false)
 

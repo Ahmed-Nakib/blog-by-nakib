@@ -17,8 +17,40 @@ const me = catchAsync(async (req, res, next) => {
         data
     });
 });
+const logout = catchAsync(async (req, res, next) => {
+    res.clearCookie("accessToken");
+    res.status(httpStatus.CREATED).json({
+        status: "success",
+        message: "user logged out successfully",
+    });
+});
+const sendOtp = catchAsync(async (req, res, next) => {
+    const otpSend = await AuthServices.sendOtp(req, res);
+    res.status(httpStatus.CREATED).json({
+        status: "success",
+        message: "OTP sent successfully",
+    });
+});
+const verifyOtp = catchAsync(async (req, res, next) => {
+    const otpSend = await AuthServices.verifyOtp(req, res);
+    res.status(httpStatus.CREATED).json({
+        status: "success",
+        message: "OTP verified successfully",
+    });
+});
+const updatePassword = catchAsync(async (req, res, next) => {
+    const otpSend = await AuthServices.updatePassword(req, res);
+    res.status(httpStatus.CREATED).json({
+        status: "success",
+        message: "Password update successfully",
+    });
+});
 export const AuthController = {
     login,
-    me
+    me,
+    logout,
+    sendOtp,
+    verifyOtp,
+    updatePassword
 };
 //# sourceMappingURL=auth.controller.js.map

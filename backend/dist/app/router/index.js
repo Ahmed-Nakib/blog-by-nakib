@@ -10,7 +10,7 @@ const routeList = [
     {
         path: "/auth",
         route: AuthRoute,
-    },
+    }
 ];
 routeList.forEach(route => {
     router.use(route.path, route.route);

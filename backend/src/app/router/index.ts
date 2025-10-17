@@ -6,7 +6,7 @@ const router = Router();
 
 interface IRoute {
     path: string;
-    route: Router;
+    route: Router; 
 }
 
 const routeList: IRoute[] = [
@@ -17,7 +17,7 @@ const routeList: IRoute[] = [
     {
         path: "/auth",
         route: AuthRoute,
-    },
+    }
 ];
 
 

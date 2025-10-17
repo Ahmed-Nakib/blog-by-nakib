@@ -2,4 +2,4 @@ export interface IAuth {
     email: string;
     password: string;
 }
-//# sourceMappingURL=Auth.interface.d.ts.map
+//# sourceMappingURL=auth.interface.d.ts.map

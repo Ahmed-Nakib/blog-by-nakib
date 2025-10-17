@@ -7,7 +7,7 @@ import { authCheck } from "../../middleware/authCheck.js";
 
 const router = Router();
 
-router.get('/all-users', authCheck , UserController.getUsers)
+router.get('/all-users', authCheck, UserController.getUsers)
 
 router.post('/create-user', validationCheck(createUserValidation), UserController.createUser)
 

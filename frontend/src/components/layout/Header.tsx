@@ -17,8 +17,8 @@ export default function Header() {
                         <NavMenu className="hidden md:block" />
                     </div>
                     <div className="flex items-center gap-3">
-                        <Button variant="outline" className="hidden sm:inline-flex">
-                          <Link to={"/login"}>Login</Link>
+                        <Button asChild variant="outline" className="hidden sm:inline-flex">
+                            <Link to={"/login"}>Login</Link>
                         </Button>
                         <Search />
                         <ModeToggle />

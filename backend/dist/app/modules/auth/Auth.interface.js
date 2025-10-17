@@ -1,2 +1,2 @@
 export {};
-//# sourceMappingURL=Auth.interface.js.map
+//# sourceMappingURL=auth.interface.js.map

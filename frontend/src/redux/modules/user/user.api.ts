@@ -7,12 +7,13 @@ const userApi = baseApi.injectEndpoints({
                 method: "POST",
                 url: "/user/create-user",
                 data: data
-            })
-        })
-    })
+            }),
+        }),
+    }),
 })
 
 
-export const {useSignUpMutation} =userApi;
-
+export const {
+    useSignUpMutation
+} = userApi;
 
