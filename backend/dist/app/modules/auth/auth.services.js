@@ -1,11 +1,13 @@
 import { User } from "../user/user.model.js";
 import jwt, {} from "jsonwebtoken";
+import nodemailer from "nodemailer";
 // import { ZodError } from "zod";
 import bcrypt from "bcryptjs";
-import { createAccessToken, createShortAccessToken, verifyAccessToken } from "../../utils/accessToken.js";
+import { createAccessToken, createShortAccessToken, verifyAccessToken, } from "../../utils/accessToken.js";
 import { generateOTP } from "../../utils/generateOTP.js";
 import { encryptPassword } from "../../utils/password.js";
 import { updatePasswordValidation } from "./auth.validation.js";
+import { envVars } from "../../config/env.js";
 const login = async (payload, res) => {
     const { email, password } = payload;
     const isUserExist = await User.findOne({ email });
@@ -13,7 +15,7 @@ const login = async (payload, res) => {
         res.status(400).json({
             status: "error",
             // message: "user doesn't exist",
-            message: "email doesn't match"
+            message: "email doesn't match",
         });
     }
     const isPasswordMatch = await bcrypt.compare(password, isUserExist?.password);
@@ -21,7 +23,7 @@ const login = async (payload, res) => {
         res.status(400).json({
             status: "error",
             // message: "user doesn't exist",
-            message: "password doesn't match"
+            message: "password doesn't match",
         });
     }
     const tokenPayload = {
@@ -29,12 +31,12 @@ const login = async (payload, res) => {
         email: isUserExist?.email,
         avatar: isUserExist?.avatar,
         isVerified: isUserExist?.isVerified,
-        isPremium: isUserExist?.isPremium
+        isPremium: isUserExist?.isPremium,
     };
     const accessToken = createAccessToken(tokenPayload);
     res.cookie("accessToken", accessToken, {
         httpOnly: true,
-        secure: false
+        secure: false,
     });
     return {
         accessToken,
@@ -45,7 +47,7 @@ const me = async (req, res) => {
     if (!isAccessToken) {
         res.status(401).json({
             status: "error",
-            message: "user is not logged in"
+            message: "user is not logged in",
         });
     }
     const isVerified = verifyAccessToken(isAccessToken);
@@ -53,20 +55,38 @@ const me = async (req, res) => {
 };
 const sendOtp = async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
+    const otp = generateOTP();
     if (!user) {
         res.status(401).json({
             status: "error",
-            message: "user doesn't exist"
+            message: "user doesn't exist",
         });
     }
     // Send Email to this user;
-    const updateUser = await User.updateOne({ email: user?.email }, { $set: { otp: generateOTP() } });
+    const updateUser = await User.updateOne({ email: user?.email }, { $set: { otp: otp } });
     const accessToken = createShortAccessToken({
         email: user?.email,
     });
+    const transporter = nodemailer.createTransport({
+        host: envVars.EMAIL.SMTP_HOST,
+        port: envVars.EMAIL.SMTP_PORT,
+        secure: false, // true for 465, false for other ports
+        auth: {
+            user: envVars.EMAIL.SMTP_USERNAME,
+            pass: envVars.EMAIL.SMTP_PASS,
+        },
+    });
+    const info = await transporter.sendMail({
+        from: "office.nakib@gmail.com",
+        to: "gurunakib2003@gmail.com",
+        subject: "Reset password",
+        text: "Hello world?", // plain‑text body
+        html: `<b>Your otp is ${otp}</b>`, // HTML body
+    });
+    console.log("Message sent:", info.messageId);
     res.cookie("accessToken", accessToken, {
         httpOnly: true,
-        secure: false
+        secure: false,
     });
 };
 const verifyOtp = async (req, res) => {
@@ -74,14 +94,14 @@ const verifyOtp = async (req, res) => {
     if (!isAccessToken) {
         res.status(401).json({
             status: "error",
-            message: "Invalid User"
+            message: "Invalid User",
         });
     }
     const isVerified = verifyAccessToken(isAccessToken);
     if (!isVerified) {
         res.status(401).json({
             status: "error",
-            message: "Unauthorize user"
+            message: "Unauthorize user",
         });
     }
     const user = await User.findOne({ email: isVerified.email });
@@ -94,7 +114,7 @@ const verifyOtp = async (req, res) => {
     if (user?.otp != req.body.otp) {
         res.status(401).json({
             status: "error",
-            message: "OTP does not match"
+            message: "OTP does not match",
         });
     }
     const tokenPayload = {
@@ -103,12 +123,12 @@ const verifyOtp = async (req, res) => {
         avatar: user?.avatar,
         isVerified: user?.isVerified,
         isPremium: user?.isPremium,
-        role: user?.role
+        role: user?.role,
     };
     const accessToken = createAccessToken(tokenPayload);
     res.cookie("accessToken", accessToken, {
         httpOnly: true,
-        secure: false
+        secure: false,
     });
 };
 const updatePassword = async (req, res) => {
@@ -118,14 +138,14 @@ const updatePassword = async (req, res) => {
     if (!isAccessToken) {
         res.status(401).json({
             status: "error",
-            message: "Invalid User"
+            message: "Invalid User",
         });
     }
     const isVerified = verifyAccessToken(isAccessToken);
     if (!isVerified) {
         res.status(401).json({
             status: "error",
-            message: "Unauthorize user"
+            message: "Unauthorize user",
         });
     }
     const user = await User.findOne({ email: isVerified.email });
@@ -137,7 +157,7 @@ const updatePassword = async (req, res) => {
     }
     await User.findByIdAndUpdate(user?._id, {
         password: await encryptPassword(req.body.password),
-        otp: null
+        otp: null,
     });
     res.clearCookie("accessToken");
 };
@@ -146,6 +166,6 @@ export const AuthServices = {
     me,
     sendOtp,
     verifyOtp,
-    updatePassword
+    updatePassword,
 };
 //# sourceMappingURL=auth.services.js.map
