@@ -64,7 +64,7 @@ const updatePassword = catchAsync(async (req: Request, res: Response, next: Next
 
     res.status(httpStatus.CREATED).json({
         status: "success",
-        message: "Password update successfully",
+        message: "Password updated successfully",
     })
 })
 

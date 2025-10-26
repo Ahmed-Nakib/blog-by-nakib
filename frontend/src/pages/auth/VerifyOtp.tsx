@@ -19,7 +19,7 @@ const formSchema = z.object({
 
 function VerifyOtp() {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const [verifyOtp] = useVerifyOtpMutation();
 
@@ -33,8 +33,7 @@ function VerifyOtp() {
 
         try {
             await verifyOtp(data).unwrap();
-            navigate("/reset-password")
-
+            navigate("/reset-password");
         } catch (error: any) {
             console.log(error);
             toast.error(error.data.message)

@@ -11,7 +11,7 @@ const envVarsFn = () => {
     ];
     requiredEnvVariables.forEach((key) => {
         if (!process.env[key]) {
-            throw new Error(`❌ Missing required environment variable: ${key}`);
+            throw new Error(`Missing required environment variable ${key}`);
         }
     });
     return {
@@ -22,7 +22,7 @@ const envVarsFn = () => {
             SMTP_PORT: process.env.SMTP_PORT,
             SMTP_USERNAME: process.env.SMTP_USERNAME,
             SMTP_PASS: process.env.SMTP_PASS,
-        },
+        }
     };
 };
 export const envVars = envVarsFn();

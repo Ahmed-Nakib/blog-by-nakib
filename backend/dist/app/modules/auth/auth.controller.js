@@ -42,7 +42,7 @@ const updatePassword = catchAsync(async (req, res, next) => {
     const otpSend = await AuthServices.updatePassword(req, res);
     res.status(httpStatus.CREATED).json({
         status: "success",
-        message: "Password update successfully",
+        message: "Password updated successfully",
     });
 });
 export const AuthController = {
