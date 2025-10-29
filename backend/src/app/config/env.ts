@@ -10,7 +10,7 @@ type EnvType = {
         SMTP_PORT: string;
         SMTP_USERNAME: string;
         SMTP_PASS: string;
-    }
+    },
     PAYMENT: {
         PAYMENT_BACKEND_SUCCESS_URL: string;
         PAYMENT_BACKEND_FAIL_URL: string;
@@ -28,7 +28,7 @@ const envVarsFn = (): EnvType => {
         "SMTP_PASS",
         "PAYMENT_BACKEND_SUCCESS_URL",
         "PAYMENT_BACKEND_FAIL_URL",
-        "PAYMENT_BACKEND_CANCEL_URL",
+        "PAYMENT_BACKEND_CANCEL_URL"
     ];
 
     requiredEnvVariables.forEach((key: string) => {

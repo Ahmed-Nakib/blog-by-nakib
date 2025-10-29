@@ -8,8 +8,9 @@ import { useMeQuery } from '@/redux/modules/auth/auth.api'
 import { Link } from 'react-router'
 
 export default function Header() {
-            const { data, isError } = useMeQuery(undefined);
-    
+
+    const { data, isError } = useMeQuery(undefined);
+
     return (
         <div className="bg-muted">
             <nav className="h-16 bg-background border-b">
@@ -21,8 +22,7 @@ export default function Header() {
                     </div>
                     <div className="flex items-center gap-3">
                         <Button asChild variant="outline" className="hidden sm:inline-flex">
-                            {data && !isError
-                                ?
+                            {data && !isError ?
                                 <Link to={"/me"}>Dashboard</Link>
                                 :
                                 <Link to={"/login"}>Login</Link>

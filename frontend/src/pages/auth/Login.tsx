@@ -18,7 +18,7 @@ const formSchema = z.object({
 function Login() {
 
     const [login] = useLoginMutation();
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const form = useForm<z.infer<typeof formSchema>>({
         defaultValues: {
@@ -33,8 +33,9 @@ function Login() {
             const res = await login(data).unwrap()
             if (res.status == "success") {
                 toast.success("You are logged in successfully")
-                navigate("/")
             }
+            navigate('/')
+
         } catch (error) {
             toast.error("Log in failed")
             console.log(error);

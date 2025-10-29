@@ -1,11 +1,10 @@
 import axios from "axios";
-import { he } from "zod/locales";
 import { envVars } from "../../config/env.js";
 export const sslCommarze = async (cus_data) => {
     const paymentInit = {
-        store_id: "abc68fdb529aeea5",
-        store_passwd: "abc68fdb529aeea5@ssl",
-        total_amount: "100",
+        store_id: "advan68fcc690cb7b1",
+        store_passwd: "advan68fcc690cb7b1@ssl",
+        total_amount: 100,
         currency: "BDT",
         tran_id: "REF123",
         success_url: `${envVars.PAYMENT.PAYMENT_BACKEND_SUCCESS_URL}/?email=${cus_data.email}`,
@@ -28,23 +27,25 @@ export const sslCommarze = async (cus_data) => {
         ship_state: "Dhaka",
         ship_postcode: "1000",
         ship_country: "Bangladesh",
-        multi_card_name: ["mastercard", "visacard", "amexcard"],
+        // multi_card_name: "mastercard,visacard,amexcard",
         value_a: "ref001_A",
         value_b: "ref002_B",
         value_c: "ref003_C",
-        value_d: "ref004_D",
+        value_d: "ref004_D"
     };
     try {
-        const res = await axios.post("https://sandbox.sslcommerz.com/gwprocess/v3/api.php", paymentInit, {
+        const res = await axios({
+            method: "POST",
+            url: "https://sandbox.sslcommerz.com/gwprocess/v3/api.php",
+            data: paymentInit,
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                "Content-Type": "application/x-www-form-urlencoded",
             }
         });
         return res.data;
     }
     catch (error) {
-        console.error("Error occurred while initializing payment:", error);
-        throw error;
+        console.log(error);
     }
 };
 //# sourceMappingURL=sslCommarze.js.map

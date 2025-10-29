@@ -6,16 +6,14 @@ const success = async (email: string) => {
         email,
     }, {
         isPremium: true
-    })
+    });
 
     return {
         status: "success",
         message: "Payment successfully added",
     }
-    
 }
 
-
-export const PaymentServices = {
+export const PaymentService = {
     success
 }

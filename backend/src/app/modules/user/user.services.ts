@@ -10,16 +10,18 @@ const createUser = async (req: Request, res: Response) => {
         password: await encryptPassword(req.body.password)
     });
 
-    const paymentData = await sslCommarze({
+    // console.log(createdUser);
+
+    const payment = await sslCommarze({
         name: createdUser.name,
-        email: createdUser.email
+        email: createdUser.email,
     });
-    console.log(paymentData);
+
     return {
         user: createdUser,
         payment: {
-            status: paymentData.status,
-            GatewayPageURL: paymentData.GatewayPageURL,
+            status: payment.status,
+            GatewayPageURL: payment.GatewayPageURL
         }
     };
 }

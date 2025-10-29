@@ -10,7 +10,7 @@ const envVarsFn = () => {
         "SMTP_PASS",
         "PAYMENT_BACKEND_SUCCESS_URL",
         "PAYMENT_BACKEND_FAIL_URL",
-        "PAYMENT_BACKEND_CANCEL_URL",
+        "PAYMENT_BACKEND_CANCEL_URL"
     ];
     requiredEnvVariables.forEach((key) => {
         if (!process.env[key]) {

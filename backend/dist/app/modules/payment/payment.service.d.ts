@@ -1,7 +1,7 @@
-export declare const PaymentServices: {
+export declare const PaymentService: {
     success: (email: string) => Promise<{
         status: string;
         message: string;
     }>;
 };
-//# sourceMappingURL=payment.services.d.ts.map
+//# sourceMappingURL=payment.service.d.ts.map

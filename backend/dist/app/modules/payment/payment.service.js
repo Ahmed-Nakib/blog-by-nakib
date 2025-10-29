@@ -10,7 +10,7 @@ const success = async (email) => {
         message: "Payment successfully added",
     };
 };
-export const PaymentServices = {
+export const PaymentService = {
     success
 };
-//# sourceMappingURL=payment.services.js.map
+//# sourceMappingURL=payment.service.js.map

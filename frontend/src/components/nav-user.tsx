@@ -23,6 +23,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+
 import { Button } from "@/components/ui/button"
 import { useLogoutMutation } from "@/redux/modules/auth/auth.api"
 import { toast } from "sonner"
@@ -38,18 +39,17 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const [logout] = useLogoutMutation();
+  const navigate = useNavigate();
 
-  const [logout] =useLogoutMutation()
-  const navigate = useNavigate()
-  
-  const  handleLogout =async () => {
+  const handleLogout = async () => {
     try {
-       await logout(undefined);
-       toast.success("logged out successfully")
-       navigate("/")
+      await logout(undefined);
+      toast.success("logged out successfully");
+      navigate("/")
     } catch (error) {
       console.log(error);
-      
+
     }
   }
 
